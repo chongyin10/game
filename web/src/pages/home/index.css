@@ -23,23 +23,250 @@
   overflow: hidden;
 }
 
-/* 主渐变背景 - 仙境天空 */
+/* 修仙地图背景 */
 .bg-gradient {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(ellipse at 30% 0%, rgba(255, 215, 0, 0.15) 0%, transparent 50%),
-    radial-gradient(ellipse at 70% 30%, rgba(138, 43, 226, 0.2) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 100%, rgba(0, 191, 255, 0.15) 0%, transparent 40%),
-    linear-gradient(180deg,
-      #0a0a1a 0%,
-      #1a1a3a 20%,
-      #2a1a4a 40%,
-      #1a2a4a 60%,
-      #0f1a2a 80%,
-      #0a0a1a 100%
-    );
+  background-image: url('/images/xiuxian-map.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   animation: gradientPulse 12s ease-in-out infinite;
+}
+
+/* 白天模式遮罩层 - 注册时使用 */
+.daylight-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 248, 220, 0.7) 0%,
+    rgba(255, 235, 200, 0.5) 30%,
+    rgba(255, 220, 180, 0.3) 60%,
+    rgba(255, 200, 150, 0.2) 100%
+  );
+  opacity: 0;
+  transition: opacity 1.2s ease-in-out;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.bg-animation.register-mode .daylight-overlay {
+  opacity: 1;
+}
+
+/* 太阳光芒效果 */
+.sun-container {
+  position: absolute;
+  top: -100px;
+  right: -100px;
+  width: 300px;
+  height: 300px;
+  opacity: 0;
+  transform: scale(0.5) translateY(100px);
+  transition: all 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 2;
+}
+
+.bg-animation.register-mode .sun-container {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* 太阳本体 */
+.sun {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(
+    circle at 30% 30%,
+    #fff 0%,
+    #fff9c4 20%,
+    #ffeb3b 40%,
+    #ffc107 70%,
+    #ff8f00 100%
+  );
+  border-radius: 50%;
+  box-shadow:
+    0 0 60px rgba(255, 235, 59, 0.8),
+    0 0 120px rgba(255, 193, 7, 0.6),
+    0 0 180px rgba(255, 152, 0, 0.4),
+    inset -10px -10px 40px rgba(255, 152, 0, 0.3);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: sunPulse 3s ease-in-out infinite;
+}
+
+@keyframes sunPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 60px rgba(255, 235, 59, 0.8),
+      0 0 120px rgba(255, 193, 7, 0.6),
+      0 0 180px rgba(255, 152, 0, 0.4),
+      inset -10px -10px 40px rgba(255, 152, 0, 0.3);
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    box-shadow:
+      0 0 80px rgba(255, 235, 59, 0.9),
+      0 0 160px rgba(255, 193, 7, 0.7),
+      0 0 240px rgba(255, 152, 0, 0.5),
+      inset -10px -10px 40px rgba(255, 152, 0, 0.3);
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+}
+
+/* 太阳光芒 */
+.sun-rays {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.sun-ray {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 235, 59, 0) 0%,
+    rgba(255, 235, 59, 0.8) 30%,
+    rgba(255, 235, 59, 0.9) 50%,
+    rgba(255, 235, 59, 0.8) 70%,
+    rgba(255, 235, 59, 0) 100%
+  );
+  transform-origin: left center;
+  animation: rayRotate 20s linear infinite;
+}
+
+.sun-ray:nth-child(1) { transform: rotate(0deg); animation-delay: 0s; }
+.sun-ray:nth-child(2) { transform: rotate(22.5deg); animation-delay: -0.5s; }
+.sun-ray:nth-child(3) { transform: rotate(45deg); animation-delay: -1s; }
+.sun-ray:nth-child(4) { transform: rotate(67.5deg); animation-delay: -1.5s; }
+.sun-ray:nth-child(5) { transform: rotate(90deg); animation-delay: -2s; }
+.sun-ray:nth-child(6) { transform: rotate(112.5deg); animation-delay: -2.5s; }
+.sun-ray:nth-child(7) { transform: rotate(135deg); animation-delay: -3s; }
+.sun-ray:nth-child(8) { transform: rotate(157.5deg); animation-delay: -3.5s; }
+.sun-ray:nth-child(9) { transform: rotate(180deg); animation-delay: -4s; }
+.sun-ray:nth-child(10) { transform: rotate(202.5deg); animation-delay: -4.5s; }
+.sun-ray:nth-child(11) { transform: rotate(225deg); animation-delay: -5s; }
+.sun-ray:nth-child(12) { transform: rotate(247.5deg); animation-delay: -5.5s; }
+.sun-ray:nth-child(13) { transform: rotate(270deg); animation-delay: -6s; }
+.sun-ray:nth-child(14) { transform: rotate(292.5deg); animation-delay: -6.5s; }
+.sun-ray:nth-child(15) { transform: rotate(315deg); animation-delay: -7s; }
+.sun-ray:nth-child(16) { transform: rotate(337.5deg); animation-delay: -7.5s; }
+
+@keyframes rayRotate {
+  0% {
+    opacity: 0.4;
+    transform: rotate(var(--rotation, 0deg)) scaleX(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: rotate(var(--rotation, 0deg)) scaleX(1.2);
+  }
+  100% {
+    opacity: 0.4;
+    transform: rotate(var(--rotation, 0deg)) scaleX(0.8);
+  }
+}
+
+/* 外层光芒 */
+.sun-glow {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle,
+    rgba(255, 248, 220, 0.4) 0%,
+    rgba(255, 235, 200, 0.3) 20%,
+    rgba(255, 220, 150, 0.2) 40%,
+    rgba(255, 200, 100, 0.1) 60%,
+    transparent 80%
+  );
+  animation: glowPulse 4s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+/* 光线照射效果 */
+.light-beams {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.bg-animation.register-mode .light-beams {
+  opacity: 1;
+}
+
+.light-beam {
+  position: absolute;
+  width: 200%;
+  height: 100px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 40%,
+    rgba(255, 248, 220, 0.2) 50%,
+    rgba(255, 255, 255, 0.1) 60%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform-origin: top right;
+  animation: beamMove 8s ease-in-out infinite;
+}
+
+.light-beam:nth-child(1) {
+  top: 10%;
+  right: 0;
+  transform: rotate(-15deg);
+  animation-delay: 0s;
+}
+
+.light-beam:nth-child(2) {
+  top: 30%;
+  right: -10%;
+  transform: rotate(-25deg);
+  animation-delay: -2s;
+}
+
+.light-beam:nth-child(3) {
+  top: 50%;
+  right: -5%;
+  transform: rotate(-10deg);
+  animation-delay: -4s;
+}
+
+@keyframes beamMove {
+  0%, 100% {
+    opacity: 0.3;
+    transform: rotate(-15deg) translateX(0);
+  }
+  50% {
+    opacity: 0.6;
+    transform: rotate(-15deg) translateX(-50px);
+  }
 }
 
 @keyframes gradientPulse {
@@ -1426,5 +1653,446 @@
   
   .toggle-password {
     right: 0.75rem;
+  }
+}
+
+/* 御剑飞行 - 修仙人物动画 */
+.flying-immortal {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.sword-rider {
+  position: absolute;
+  left: -200px;
+  top: 25%;
+  animation: flyOnSword 20s linear infinite;
+  will-change: transform;
+}
+
+.sword-rider:nth-child(2) {
+  top: 55%;
+  animation-delay: -10s;
+  animation-duration: 25s;
+  transform: scale(0.7);
+}
+
+.sword-rider:nth-child(3) {
+  top: 40%;
+  animation-delay: -5s;
+  animation-duration: 22s;
+  transform: scale(0.85);
+}
+
+@keyframes flyOnSword {
+  0% {
+    transform: translateX(-200px) translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  25% {
+    transform: translateX(25vw) translateY(-15px) rotate(-2deg);
+  }
+  50% {
+    transform: translateX(50vw) translateY(0) rotate(0deg);
+  }
+  75% {
+    transform: translateX(75vw) translateY(-10px) rotate(2deg);
+  }
+  95% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(calc(100vw + 200px)) translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+}
+
+/* 飞剑主体 */
+.flying-sword {
+  position: relative;
+  width: 120px;
+  height: 12px;
+}
+
+.sword-blade {
+  position: absolute;
+  width: 80px;
+  height: 8px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(192, 192, 192, 0.9) 5%,
+    rgba(255, 255, 255, 0.95) 30%,
+    rgba(255, 215, 0, 0.9) 50%,
+    rgba(255, 255, 255, 0.95) 70%,
+    rgba(192, 192, 192, 0.9) 95%,
+    transparent 100%
+  );
+  border-radius: 50%;
+  left: 20px;
+  top: 2px;
+  box-shadow:
+    0 0 15px rgba(255, 215, 0, 0.6),
+    0 0 30px rgba(255, 215, 0, 0.3),
+    0 0 50px rgba(255, 215, 0, 0.1);
+  animation: swordGlow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes swordGlow {
+  0% {
+    box-shadow:
+      0 0 15px rgba(255, 215, 0, 0.6),
+      0 0 30px rgba(255, 215, 0, 0.3),
+      0 0 50px rgba(255, 215, 0, 0.1);
+  }
+  100% {
+    box-shadow:
+      0 0 25px rgba(255, 215, 0, 0.8),
+      0 0 50px rgba(255, 215, 0, 0.5),
+      0 0 80px rgba(255, 215, 0, 0.3);
+  }
+}
+
+.sword-hilt {
+  position: absolute;
+  width: 20px;
+  height: 12px;
+  background: linear-gradient(180deg,
+    rgba(139, 69, 19, 0.9) 0%,
+    rgba(160, 82, 45, 0.9) 50%,
+    rgba(139, 69, 19, 0.9) 100%
+  );
+  border-radius: 2px;
+  right: 15px;
+  top: 0;
+  box-shadow: 0 0 10px rgba(139, 69, 19, 0.5);
+}
+
+.sword-pommel {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle, #ffd700 0%, #b8860b 100%);
+  border-radius: 50%;
+  right: 0;
+  top: 2px;
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
+}
+
+/* 剑尾流光 */
+.sword-trail {
+  position: absolute;
+  width: 150px;
+  height: 4px;
+  background: linear-gradient(90deg,
+    rgba(255, 215, 0, 0.8) 0%,
+    rgba(255, 215, 0, 0.4) 30%,
+    rgba(255, 215, 0, 0.1) 60%,
+    transparent 100%
+  );
+  left: -130px;
+  top: 4px;
+  border-radius: 50%;
+  filter: blur(2px);
+  animation: trailPulse 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes trailPulse {
+  0% {
+    opacity: 0.6;
+    transform: scaleX(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scaleX(1.1);
+  }
+}
+
+/* 修仙人物 */
+.immortal-figure {
+  position: absolute;
+  width: 40px;
+  height: 50px;
+  left: 35px;
+  top: -35px;
+}
+
+/* 人物身体 */
+.immortal-body {
+  position: absolute;
+  width: 20px;
+  height: 28px;
+  background: linear-gradient(180deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(220, 220, 220, 0.9) 50%,
+    rgba(200, 200, 200, 0.9) 100%
+  );
+  border-radius: 40% 40% 30% 30%;
+  left: 10px;
+  top: 12px;
+  box-shadow:
+    0 0 10px rgba(255, 255, 255, 0.5),
+    inset 0 2px 5px rgba(255, 255, 255, 0.8);
+}
+
+/* 古装腰带 */
+.immortal-body::before {
+  content: '';
+  position: absolute;
+  width: 22px;
+  height: 4px;
+  background: linear-gradient(90deg, #8b4513, #d2691e, #8b4513);
+  left: -1px;
+  top: 15px;
+  border-radius: 2px;
+}
+
+/* 飘动的衣摆 */
+.immortal-robes {
+  position: absolute;
+  width: 24px;
+  height: 20px;
+  left: 8px;
+  top: 35px;
+  overflow: hidden;
+}
+
+.immortal-robes::before {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 20px;
+  background: linear-gradient(180deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(240, 240, 240, 0.7) 50%,
+    transparent 100%
+  );
+  border-radius: 0 0 50% 50%;
+  animation: robeWave 0.6s ease-in-out infinite alternate;
+  transform-origin: top center;
+}
+
+@keyframes robeWave {
+  0% {
+    transform: rotate(-5deg) scaleY(1);
+  }
+  100% {
+    transform: rotate(5deg) scaleY(0.95);
+  }
+}
+
+/* 飘带 */
+.immortal-sash {
+  position: absolute;
+  width: 60px;
+  height: 6px;
+  left: -10px;
+  top: 20px;
+}
+
+.immortal-sash::before,
+.immortal-sash::after {
+  content: '';
+  position: absolute;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255, 215, 0, 0.6) 20%,
+    rgba(255, 215, 0, 0.8) 50%,
+    rgba(255, 215, 0, 0.6) 80%,
+    transparent
+  );
+  border-radius: 3px;
+  animation: sashFlutter 0.8s ease-in-out infinite alternate;
+}
+
+.immortal-sash::before {
+  width: 35px;
+  left: -25px;
+  animation-delay: 0s;
+}
+
+.immortal-sash::after {
+  width: 30px;
+  right: -20px;
+  animation-delay: 0.2s;
+}
+
+@keyframes sashFlutter {
+  0% {
+    transform: translateY(-2px) rotate(-3deg);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(2px) rotate(3deg);
+    opacity: 1;
+  }
+}
+
+/* 头部 */
+.immortal-head {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: linear-gradient(180deg,
+    rgba(255, 220, 177, 0.95) 0%,
+    rgba(255, 200, 150, 0.9) 100%
+  );
+  border-radius: 50%;
+  left: 12px;
+  top: 0;
+  box-shadow: 0 0 8px rgba(255, 220, 177, 0.5);
+}
+
+/* 发髻 */
+.immortal-head::before {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 8px;
+  background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+  border-radius: 50% 50% 30% 30%;
+  left: 2px;
+  top: -2px;
+}
+
+/* 发簪 */
+.immortal-head::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 12px;
+  background: linear-gradient(180deg, #ffd700 0%, #ff8c00 100%);
+  left: 50%;
+  top: -6px;
+  transform: translateX(-50%);
+  border-radius: 1px;
+  box-shadow: 0 0 5px rgba(255, 215, 0, 0.8);
+}
+
+/* 长袖 */
+.immortal-sleeves {
+  position: absolute;
+  width: 50px;
+  height: 30px;
+  left: -5px;
+  top: 15px;
+}
+
+.immortal-sleeves::before,
+.immortal-sleeves::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 25px;
+  background: linear-gradient(180deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.5) 100%
+  );
+  border-radius: 50%;
+  animation: sleeveWave 0.7s ease-in-out infinite alternate;
+}
+
+.immortal-sleeves::before {
+  left: 0;
+  transform-origin: top right;
+  animation-delay: 0s;
+}
+
+.immortal-sleeves::after {
+  right: 0;
+  transform-origin: top left;
+  animation-delay: 0.3s;
+}
+
+@keyframes sleeveWave {
+  0% {
+    transform: rotate(-15deg) translateY(0);
+  }
+  100% {
+    transform: rotate(-25deg) translateY(3px);
+  }
+}
+
+/* 灵气光环 */
+.immortal-aura {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  left: -20px;
+  top: -25px;
+  border: 2px solid rgba(255, 215, 0, 0.2);
+  border-radius: 50%;
+  animation: auraRotate 3s linear infinite;
+}
+
+.immortal-aura::before {
+  content: '';
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  left: 8px;
+  top: 8px;
+  border: 1px solid rgba(255, 215, 0, 0.15);
+  border-radius: 50%;
+  animation: auraRotate 2s linear infinite reverse;
+}
+
+@keyframes auraRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* 粒子效果 */
+.immortal-sparkles {
+  position: absolute;
+  inset: -20px;
+  pointer-events: none;
+}
+
+.immortal-sparkles::before,
+.immortal-sparkles::after {
+  content: '✦';
+  position: absolute;
+  color: rgba(255, 215, 0, 0.8);
+  font-size: 8px;
+  animation: sparkleFloat 1.5s ease-in-out infinite;
+}
+
+.immortal-sparkles::before {
+  left: 10px;
+  top: 0;
+  animation-delay: 0s;
+}
+
+.immortal-sparkles::after {
+  right: 5px;
+  bottom: 10px;
+  animation-delay: 0.7s;
+}
+
+@keyframes sparkleFloat {
+  0%, 100% {
+    opacity: 0.3;
+    transform: translateY(0) scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-10px) scale(1.2);
+  }
+}
+
+/* 响应式隐藏 */
+@media (max-width: 992px) {
+  .flying-immortal {
+    display: none;
   }
 }

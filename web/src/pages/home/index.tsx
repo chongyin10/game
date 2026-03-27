@@ -437,9 +437,30 @@ export default function HomePage() {
   return (
     <div className="home-page">
       {/* 修仙世界背景动画 - 使用纯CSS动画优化性能 */}
-      <div className="bg-animation">
+      <div className={`bg-animation ${authMode === 'register' ? 'register-mode' : ''}`}>
         {/* 主渐变背景 */}
         <div className="bg-gradient"></div>
+
+        {/* 白天模式遮罩层 */}
+        <div className="daylight-overlay"></div>
+
+        {/* 太阳光芒效果 */}
+        <div className="sun-container">
+          <div className="sun-glow"></div>
+          <div className="sun-rays">
+            {[...Array(16)].map((_, i) => (
+              <div key={i} className="sun-ray" style={{ '--rotation': `${i * 22.5}deg` } as React.CSSProperties} />
+            ))}
+          </div>
+          <div className="sun"></div>
+        </div>
+
+        {/* 光线照射效果 */}
+        <div className="light-beams">
+          <div className="light-beam"></div>
+          <div className="light-beam"></div>
+          <div className="light-beam"></div>
+        </div>
 
         {/* 星空层 - 减少数量，使用CSS动画 */}
         <div className="starfield">
@@ -530,6 +551,64 @@ export default function HomePage() {
             <div className="crane-body"></div>
             <div className="crane-wing left"></div>
             <div className="crane-wing right"></div>
+          </div>
+        </div>
+
+        {/* 御剑飞行 - 修仙人物动画 */}
+        <div className="flying-immortal">
+          {/* 第一个御剑仙人 */}
+          <div className="sword-rider">
+            <div className="flying-sword">
+              <div className="sword-trail"></div>
+              <div className="sword-blade"></div>
+              <div className="sword-hilt"></div>
+              <div className="sword-pommel"></div>
+            </div>
+            <div className="immortal-figure">
+              <div className="immortal-aura"></div>
+              <div className="immortal-sparkles"></div>
+              <div className="immortal-head"></div>
+              <div className="immortal-body"></div>
+              <div className="immortal-robes"></div>
+              <div className="immortal-sash"></div>
+              <div className="immortal-sleeves"></div>
+            </div>
+          </div>
+          {/* 第二个御剑仙人 */}
+          <div className="sword-rider">
+            <div className="flying-sword">
+              <div className="sword-trail"></div>
+              <div className="sword-blade"></div>
+              <div className="sword-hilt"></div>
+              <div className="sword-pommel"></div>
+            </div>
+            <div className="immortal-figure">
+              <div className="immortal-aura"></div>
+              <div className="immortal-sparkles"></div>
+              <div className="immortal-head"></div>
+              <div className="immortal-body"></div>
+              <div className="immortal-robes"></div>
+              <div className="immortal-sash"></div>
+              <div className="immortal-sleeves"></div>
+            </div>
+          </div>
+          {/* 第三个御剑仙人 */}
+          <div className="sword-rider">
+            <div className="flying-sword">
+              <div className="sword-trail"></div>
+              <div className="sword-blade"></div>
+              <div className="sword-hilt"></div>
+              <div className="sword-pommel"></div>
+            </div>
+            <div className="immortal-figure">
+              <div className="immortal-aura"></div>
+              <div className="immortal-sparkles"></div>
+              <div className="immortal-head"></div>
+              <div className="immortal-body"></div>
+              <div className="immortal-robes"></div>
+              <div className="immortal-sash"></div>
+              <div className="immortal-sleeves"></div>
+            </div>
           </div>
         </div>
 
