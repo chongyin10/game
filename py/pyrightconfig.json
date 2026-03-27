@@ -1,0 +1,17 @@
+{
+  "include": ["./**/*.py"],
+  "exclude": ["**/venv", "**/__pycache__", "**/*.pyc"],
+  "typeCheckingMode": "basic",
+  "useLibraryCodeForTypes": false,
+  "reportMissingImports": "none",
+  "pythonVersion": "3.11",
+  "pythonPlatform": "Darwin",
+  "extraPaths": ["."],
+  "executionEnvironments": [
+    {
+      "root": ".",
+      "pythonVersion": "3.11",
+      "extraPaths": ["."]
+    }
+  ]
+}

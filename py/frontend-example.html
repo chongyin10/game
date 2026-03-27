@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UserInfo API 测试页面</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 { text-align: center; margin-bottom: 20px; color: #333; }
+        .section {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #555;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+            font-weight: 500;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        button:hover { background: #0056b3; }
+        button:disabled { background: #ccc; cursor: not-allowed; }
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            min-height: 60px;
+            white-space: pre-wrap;
+            word-break: break-all;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+        }
+        .success { border-left: 4px solid #28a745; }
+        .error { border-left: 4px solid #dc3545; }
+        .loading { border-left: 4px solid #ffc107; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <h1>🔧 UserInfo API 测试页面</h1>
+    <p style="text-align: center; color: #666; margin-bottom: 20px;">
+        API 地址: <code>http://127.0.0.1:5000</code>
+    </p>
+
+    <!-- 添加用户 -->
+    <div class="section">
+        <h2>➕ 添加用户 (POST /api/userinfo/add)</h2>
+        <div class="form-group">
+            <label>用户名 *</label>
+            <input type="text" id="add-username" placeholder="请输入用户名">
+        </div>
+        <div class="grid">
+            <div class="form-group">
+                <label>邮箱</label>
+                <input type="email" id="add-email" placeholder="example@email.com">
+            </div>
+            <div class="form-group">
+                <label>电话</label>
+                <input type="text" id="add-phone" placeholder="13800138000">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>密码</label>
+            <input type="password" id="add-password" placeholder="请输入密码">
+        </div>
+        <button onclick="addUser()">添加用户</button>
+        <div id="add-result" class="result">等待操作...</div>
+    </div>
+
+    <!-- 获取用户 -->
+    <div class="section">
+        <h2>🔍 查询用户 (GET /api/userinfo/get)</h2>
+        <div class="grid">
+            <div class="form-group">
+                <label>用户ID</label>
+                <input type="number" id="get-userid" placeholder="1">
+            </div>
+            <div class="form-group">
+                <label>用户名</label>
+                <input type="text" id="get-username" placeholder="张三">
+            </div>
+        </div>
+        <div class="grid">
+            <div class="form-group">
+                <label>邮箱</label>
+                <input type="email" id="get-email" placeholder="example@email.com">
+            </div>
+            <div class="form-group">
+                <label>电话</label>
+                <input type="text" id="get-phone" placeholder="13800138000">
+            </div>
+        </div>
+        <button onclick="getUser()">查询用户</button>
+        <div id="get-result" class="result">等待操作...</div>
+    </div>
+
+    <!-- 更新用户 -->
+    <div class="section">
+        <h2>✏️ 更新用户 (PUT /api/userinfo/update)</h2>
+        <div class="form-group">
+            <label>用户ID *</label>
+            <input type="number" id="update-userid" placeholder="请输入要更新的用户ID">
+        </div>
+        <div class="grid">
+            <div class="form-group">
+                <label>新用户名</label>
+                <input type="text" id="update-username" placeholder="不填则不修改">
+            </div>
+            <div class="form-group">
+                <label>新邮箱</label>
+                <input type="email" id="update-email" placeholder="不填则不修改">
+            </div>
+        </div>
+        <div class="grid">
+            <div class="form-group">
+                <label>新电话</label>
+                <input type="text" id="update-phone" placeholder="不填则不修改">
+            </div>
+            <div class="form-group">
+                <label>新密码</label>
+                <input type="password" id="update-password" placeholder="不填则不修改">
+            </div>
+        </div>
+        <button onclick="updateUser()">更新用户</button>
+        <div id="update-result" class="result">等待操作...</div>
+    </div>
+
+    <!-- 删除用户 -->
+    <div class="section">
+        <h2>🗑️ 删除用户 (DELETE /api/userinfo/delete)</h2>
+        <div class="form-group">
+            <label>用户ID *</label>
+            <input type="number" id="delete-userid" placeholder="请输入要删除的用户ID">
+        </div>
+        <button onclick="deleteUser()">删除用户</button>
+        <div id="delete-result" class="result">等待操作...</div>
+    </div>
+
+    <!-- 获取列表 -->
+    <div class="section">
+        <h2>📋 获取用户列表 (GET /api/userinfo/list)</h2>
+        <div class="grid">
+            <div class="form-group">
+                <label>数量限制</label>
+                <input type="number" id="list-limit" value="100" placeholder="100">
+            </div>
+            <div class="form-group">
+                <label>偏移量</label>
+                <input type="number" id="list-offset" value="0" placeholder="0">
+            </div>
+        </div>
+        <button onclick="getUserList()">获取列表</button>
+        <div id="list-result" class="result">等待操作...</div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://127.0.0.1:5000/api/userinfo';
+
+        function showResult(elementId, data, isError = false) {
+            const el = document.getElementById(elementId);
+            el.textContent = typeof data === 'object' ? JSON.stringify(data, null, 2) : data;
+            el.className = 'result ' + (isError ? 'error' : 'success');
+        }
+
+        function showLoading(elementId) {
+            const el = document.getElementById(elementId);
+            el.textContent = '加载中...';
+            el.className = 'result loading';
+        }
+
+        // 添加用户
+        async function addUser() {
+            const username = document.getElementById('add-username').value;
+            if (!username) {
+                showResult('add-result', '错误: 用户名不能为空', true);
+                return;
+            }
+
+            showLoading('add-result');
+            try {
+                const res = await fetch(`${API_BASE}/add`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username,
+                        email: document.getElementById('add-email').value || undefined,
+                        phone: document.getElementById('add-phone').value || undefined,
+                        password: document.getElementById('add-password').value || undefined
+                    })
+                });
+                const data = await res.json();
+                showResult('add-result', data, !data.success);
+            } catch (err) {
+                showResult('add-result', `请求失败: ${err.message}`, true);
+            }
+        }
+
+        // 获取用户
+        async function getUser() {
+            const userId = document.getElementById('get-userid').value;
+            const username = document.getElementById('get-username').value;
+            const email = document.getElementById('get-email').value;
+            const phone = document.getElementById('get-phone').value;
+
+            if (!userId && !username && !email && !phone) {
+                showResult('get-result', '错误: 请至少提供一个查询条件', true);
+                return;
+            }
+
+            showLoading('get-result');
+            try {
+                const params = new URLSearchParams();
+                if (userId) params.append('user_id', userId);
+                if (username) params.append('username', username);
+                if (email) params.append('email', email);
+                if (phone) params.append('phone', phone);
+
+                const res = await fetch(`${API_BASE}/get?${params}`);
+                const data = await res.json();
+                showResult('get-result', data, !data.success);
+            } catch (err) {
+                showResult('get-result', `请求失败: ${err.message}`, true);
+            }
+        }
+
+        // 更新用户
+        async function updateUser() {
+            const userId = document.getElementById('update-userid').value;
+            if (!userId) {
+                showResult('update-result', '错误: 用户ID不能为空', true);
+                return;
+            }
+
+            const updateData = { user_id: parseInt(userId) };
+            const username = document.getElementById('update-username').value;
+            const email = document.getElementById('update-email').value;
+            const phone = document.getElementById('update-phone').value;
+            const password = document.getElementById('update-password').value;
+
+            if (username) updateData.username = username;
+            if (email) updateData.email = email;
+            if (phone) updateData.phone = phone;
+            if (password) updateData.password = password;
+
+            if (Object.keys(updateData).length === 1) {
+                showResult('update-result', '错误: 请至少提供一个要更新的字段', true);
+                return;
+            }
+
+            showLoading('update-result');
+            try {
+                const res = await fetch(`${API_BASE}/update`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updateData)
+                });
+                const data = await res.json();
+                showResult('update-result', data, !data.success);
+            } catch (err) {
+                showResult('update-result', `请求失败: ${err.message}`, true);
+            }
+        }
+
+        // 删除用户
+        async function deleteUser() {
+            const userId = document.getElementById('delete-userid').value;
+            if (!userId) {
+                showResult('delete-result', '错误: 用户ID不能为空', true);
+                return;
+            }
+
+            if (!confirm(`确定要删除用户ID为 ${userId} 的用户吗？`)) return;
+
+            showLoading('delete-result');
+            try {
+                const res = await fetch(`${API_BASE}/delete?user_id=${userId}`, {
+                    method: 'DELETE'
+                });
+                const data = await res.json();
+                showResult('delete-result', data, !data.success);
+            } catch (err) {
+                showResult('delete-result', `请求失败: ${err.message}`, true);
+            }
+        }
+
+        // 获取用户列表
+        async function getUserList() {
+            const limit = document.getElementById('list-limit').value || 100;
+            const offset = document.getElementById('list-offset').value || 0;
+
+            showLoading('list-result');
+            try {
+                const res = await fetch(`${API_BASE}/list?limit=${limit}&offset=${offset}`);
+                const data = await res.json();
+                showResult('list-result', data, !data.success);
+            } catch (err) {
+                showResult('list-result', `请求失败: ${err.message}`, true);
+            }
+        }
+    </script>
+</body>
+</html>

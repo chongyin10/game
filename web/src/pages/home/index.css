@@ -1,0 +1,1430 @@
+/* 游戏门户登录页面样式 */
+
+/* input wrapper 保持白色背景 */
+.input-wrapper:hover,
+.input-wrapper {
+  background-color: #fff !important;
+}
+
+.home-page {
+  min-height: 100vh;
+  display: flex;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: #0f0f1a;
+}
+
+/* 修仙世界背景动画 */
+.bg-animation {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* 主渐变背景 - 仙境天空 */
+.bg-gradient {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 0%, rgba(255, 215, 0, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 30%, rgba(138, 43, 226, 0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 100%, rgba(0, 191, 255, 0.15) 0%, transparent 40%),
+    linear-gradient(180deg,
+      #0a0a1a 0%,
+      #1a1a3a 20%,
+      #2a1a4a 40%,
+      #1a2a4a 60%,
+      #0f1a2a 80%,
+      #0a0a1a 100%
+    );
+  animation: gradientPulse 12s ease-in-out infinite;
+}
+
+@keyframes gradientPulse {
+  0%, 100% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 0.9;
+    filter: brightness(1.1);
+  }
+}
+
+/* 星空层 */
+.starfield {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.star {
+  position: absolute;
+  background: radial-gradient(circle, #fff 0%, rgba(255, 255, 255, 0) 70%);
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+  animation: starTwinkle var(--duration, 3s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+  will-change: opacity, transform;
+}
+
+@keyframes starTwinkle {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* 流星 */
+.meteors {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.meteor {
+  position: absolute;
+  width: 150px;
+  height: 2px;
+  background: linear-gradient(90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.8) 30%,
+    rgba(255, 215, 0, 1) 100%
+  );
+  border-radius: 50%;
+  transform: rotate(-45deg);
+  box-shadow:
+    0 0 10px rgba(255, 215, 0, 0.8),
+    0 0 20px rgba(255, 215, 0, 0.4);
+  animation: meteorFall 18s linear infinite;
+  animation-delay: var(--delay, 0s);
+  will-change: transform, opacity;
+}
+
+@keyframes meteorFall {
+  0% {
+    transform: rotate(-45deg) translateX(-200px);
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  15% {
+    transform: rotate(-45deg) translateX(120vw);
+    opacity: 0;
+  }
+  100% {
+    transform: rotate(-45deg) translateX(120vw);
+    opacity: 0;
+  }
+}
+
+.meteor::before {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: #ffd700;
+  border-radius: 50%;
+  right: 0;
+  top: -2px;
+  box-shadow: 0 0 20px #ffd700;
+}
+
+/* 云海层 */
+.cloud-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.cloud {
+  position: absolute;
+  height: 80px;
+  background: linear-gradient(180deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    transparent 100%
+  );
+  border-radius: 100px;
+  filter: blur(20px);
+  will-change: transform;
+}
+
+/* 云朵动画 - 远景向右飘动 */
+.cloud-far-item {
+  filter: blur(30px);
+  background: linear-gradient(180deg,
+    rgba(255, 215, 0, 0.08) 0%,
+    rgba(255, 255, 255, 0.03) 50%,
+    transparent 100%
+  );
+  animation: cloudFloatRight 80s linear infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+/* 云朵动画 - 中景向左飘动 */
+.cloud-mid-item {
+  filter: blur(25px);
+  background: linear-gradient(180deg,
+    rgba(138, 43, 226, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    transparent 100%
+  );
+  animation: cloudFloatLeft 60s linear infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+/* 云朵动画 - 近景向右飘动 */
+.cloud-near-item {
+  filter: blur(15px);
+  background: linear-gradient(180deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    transparent 100%
+  );
+  animation: cloudFloatRight 40s linear infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes cloudFloatRight {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes cloudFloatLeft {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* 仙鹤 - 使用纯CSS动画 */
+.immortal-crane {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.crane {
+  position: absolute;
+  width: 60px;
+  height: 20px;
+  left: 0;
+  top: 15%;
+  animation: craneFly 30s linear infinite;
+  will-change: transform;
+}
+
+.crane:nth-child(2) {
+  top: 35%;
+  animation-delay: -10s;
+}
+
+.crane:nth-child(3) {
+  top: 55%;
+  animation-delay: -20s;
+}
+
+.crane-small {
+  transform: scale(0.6);
+  opacity: 0.7;
+}
+
+.crane-reverse {
+  animation-name: craneFlyReverse;
+  animation-duration: 35s;
+  animation-delay: 10s;
+  top: 25%;
+}
+
+@keyframes craneFly {
+  0% {
+    transform: translateX(-100px) translateY(0);
+  }
+  25% {
+    transform: translateX(25vw) translateY(-20px);
+  }
+  50% {
+    transform: translateX(50vw) translateY(0);
+  }
+  75% {
+    transform: translateX(75vw) translateY(-15px);
+  }
+  100% {
+    transform: translateX(calc(100vw + 100px)) translateY(0);
+  }
+}
+
+@keyframes craneFlyReverse {
+  0% {
+    transform: translateX(calc(100vw + 100px)) translateY(0);
+  }
+  25% {
+    transform: translateX(75vw) translateY(-15px);
+  }
+  50% {
+    transform: translateX(50vw) translateY(0);
+  }
+  75% {
+    transform: translateX(25vw) translateY(-10px);
+  }
+  100% {
+    transform: translateX(-100px) translateY(0);
+  }
+}
+
+.crane-body {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.9) 20%,
+    rgba(255, 255, 255, 0.9) 80%,
+    transparent 100%
+  );
+  border-radius: 50%;
+  clip-path: polygon(0% 50%, 15% 30%, 85% 30%, 100% 50%, 85% 70%, 15% 70%);
+}
+
+.crane-body::before {
+  content: '';
+  position: absolute;
+  width: 15px;
+  height: 8px;
+  background: rgba(255, 215, 0, 0.8);
+  left: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 50%;
+}
+
+.crane-body::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #333;
+  left: 2px;
+  top: 40%;
+  border-radius: 50%;
+}
+
+.crane-wing {
+  position: absolute;
+  width: 40px;
+  height: 15px;
+  background: linear-gradient(180deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.6) 100%
+  );
+  top: 0;
+  animation: wingFlap 0.3s ease-in-out infinite alternate;
+  transform-origin: bottom center;
+}
+
+.crane-wing.left {
+  left: 10px;
+  border-radius: 50% 50% 0 0;
+}
+
+.crane-wing.right {
+  right: 10px;
+  border-radius: 50% 50% 0 0;
+}
+
+@keyframes wingFlap {
+  0% {
+    transform: rotate(-45deg);
+  }
+  100% {
+    transform: rotate(-15deg);
+  }
+}
+
+.crane-wing.right {
+  animation-name: wingFlapRight;
+}
+
+@keyframes wingFlapRight {
+  0% {
+    transform: rotate(45deg);
+  }
+  100% {
+    transform: rotate(15deg);
+  }
+}
+
+/* 灵气粒子 - 使用纯CSS动画 */
+.spirit-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.spirit-particle {
+  position: absolute;
+  background: radial-gradient(circle,
+    rgba(255, 215, 0, 0.8) 0%,
+    rgba(255, 215, 0, 0.3) 40%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  animation: spiritRise 10s ease-out infinite;
+  animation-delay: var(--delay, 0s);
+  will-change: transform, opacity;
+}
+
+@keyframes spiritRise {
+  0% {
+    transform: translateY(100vh) scale(0.5);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-20vh) scale(1);
+    opacity: 0;
+  }
+}
+
+/* 山脉剪影 */
+.mountain-silhouette {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30%;
+  pointer-events: none;
+}
+
+.mountain-silhouette svg {
+  width: 100%;
+  height: 100%;
+}
+
+.mountain-back {
+  fill: rgba(20, 20, 40, 0.6);
+}
+
+.mountain-front {
+  fill: rgba(15, 15, 30, 0.8);
+}
+
+/* 符文光晕 - 使用纯CSS动画 */
+.rune-auras {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.rune-aura {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle,
+    rgba(255, 215, 0, 0.15) 0%,
+    rgba(138, 43, 226, 0.1) 30%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  filter: blur(20px);
+  animation: runeGlow 5s ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+  will-change: opacity, transform;
+}
+
+@keyframes runeGlow {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.2);
+  }
+}
+
+.rune-aura::before {
+  content: '道';
+  position: absolute;
+  font-size: 2rem;
+  color: rgba(255, 215, 0, 0.3);
+  font-family: 'STKaiti', 'KaiTi', serif;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* 左侧修仙英雄区域 */
+.hero-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 3rem;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* 背景仙气效果 */
+.hero-bg-effects {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.qi-flow {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.4;
+  animation: qiFloat 12s ease-in-out infinite;
+}
+
+.qi-flow-1 {
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.6) 0%, transparent 70%);
+  top: 10%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.qi-flow-2 {
+  background: radial-gradient(circle, rgba(138, 43, 226, 0.5) 0%, transparent 70%);
+  top: 50%;
+  right: 10%;
+  animation-delay: -4s;
+}
+
+.qi-flow-3 {
+  background: radial-gradient(circle, rgba(0, 191, 255, 0.4) 0%, transparent 70%);
+  bottom: 10%;
+  left: 30%;
+  animation-delay: -8s;
+}
+
+@keyframes qiFloat {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.3;
+  }
+  33% {
+    transform: translate(30px, -30px) scale(1.1);
+    opacity: 0.5;
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+    opacity: 0.4;
+  }
+}
+
+.hero-content {
+  text-align: center;
+  max-width: 600px;
+  position: relative;
+  z-index: 2;
+}
+
+/* 主图标 - 仙剑 */
+.immortal-icon {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-glow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: iconGlow 3s ease-in-out infinite;
+}
+
+@keyframes iconGlow {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+.sword-icon {
+  color: #ffd700;
+  filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.6));
+  position: relative;
+  z-index: 2;
+  animation: swordFloat 4s ease-in-out infinite;
+}
+
+@keyframes swordFloat {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(5deg);
+  }
+}
+
+.icon-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 2px solid rgba(255, 215, 0, 0.3);
+  border-radius: 50%;
+  animation: ringExpand 3s ease-out infinite;
+}
+
+.icon-ring.delay-1 {
+  animation-delay: 1s;
+}
+
+.icon-ring.delay-2 {
+  animation-delay: 2s;
+}
+
+@keyframes ringExpand {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+/* 标题样式 */
+.title-wrapper {
+  margin-bottom: 1rem;
+}
+
+.hero-title {
+  font-size: 4rem;
+  font-weight: 900;
+  margin: 0 0 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.title-char {
+  display: inline-block;
+  background: linear-gradient(180deg, #ffd700 0%, #ff8c00 50%, #ffd700 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 40px rgba(255, 215, 0, 0.5);
+  animation: charGlow 2s ease-in-out infinite;
+  position: relative;
+}
+
+.title-char::after {
+  content: attr(data-char);
+  position: absolute;
+  left: 0;
+  top: 0;
+  filter: blur(20px);
+  opacity: 0.5;
+  background: linear-gradient(180deg, #ffd700 0%, #ff8c00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.title-char:nth-child(1) { animation-delay: 0s; }
+.title-char:nth-child(2) { animation-delay: 0.2s; }
+.title-char:nth-child(3) { animation-delay: 0.4s; }
+.title-char:nth-child(4) { animation-delay: 0.6s; }
+
+@keyframes charGlow {
+  0%, 100% {
+    filter: brightness(1);
+    transform: translateY(0);
+  }
+  50% {
+    filter: brightness(1.3);
+    transform: translateY(-5px);
+  }
+}
+
+.title-decoration {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.deco-line {
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.6), transparent);
+}
+
+.deco-line.left {
+  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.8));
+}
+
+.deco-line.right {
+  background: linear-gradient(90deg, rgba(255, 215, 0, 0.8), transparent);
+}
+
+.deco-star {
+  color: #ffd700;
+  animation: starTwinkle 2s ease-in-out infinite;
+}
+
+@keyframes starTwinkle {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2) rotate(180deg);
+  }
+}
+
+/* 副标题 */
+.hero-tagline {
+  margin-bottom: 2rem;
+}
+
+.tagline-text {
+  font-size: 1.4rem;
+  color: rgba(255, 255, 255, 0.8);
+  letter-spacing: 0.3em;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  position: relative;
+}
+
+.tagline-text::before,
+.tagline-text::after {
+  content: '✦';
+  color: #ffd700;
+  margin: 0 1rem;
+  font-size: 0.8rem;
+  animation: sparkle 1.5s ease-in-out infinite;
+}
+
+.tagline-text::after {
+  animation-delay: 0.75s;
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.3);
+  }
+}
+
+/* 修仙境界展示 */
+.realm-showcase {
+  margin-bottom: 2.5rem;
+}
+
+.realm-track {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  position: relative;
+  padding: 1rem 0;
+}
+
+.track-line {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255, 215, 0, 0.3) 10%,
+    rgba(255, 215, 0, 0.5) 50%,
+    rgba(255, 215, 0, 0.3) 90%,
+    transparent
+  );
+  z-index: 0;
+}
+
+.realm-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.node-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffd700, #ff8c00);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.realm-node:hover .node-dot {
+  transform: scale(1.5);
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.9);
+}
+
+.node-label {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+.realm-node:hover .node-label {
+  color: #ffd700;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+/* 特色卡片 */
+.feature-cards {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.feature-card.immortal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.5rem 1.25rem;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.08) 0%, rgba(138, 43, 226, 0.05) 100%);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  backdrop-filter: blur(10px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  min-width: 140px;
+}
+
+.feature-card.immortal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(255, 215, 0, 0.15) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.feature-card.immortal:hover {
+  border-color: rgba(255, 215, 0, 0.5);
+  box-shadow:
+    0 15px 50px rgba(255, 215, 0, 0.2),
+    0 0 0 1px rgba(255, 215, 0, 0.1) inset;
+}
+
+.feature-card.immortal:hover::before {
+  opacity: 1;
+}
+
+.card-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.3s ease;
+}
+
+.feature-card.immortal:hover .card-icon {
+  transform: scale(1.1);
+}
+
+.card-icon.flame {
+  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+  box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+}
+
+.card-icon.star {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.card-icon.wind {
+  background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+  box-shadow: 0 8px 25px rgba(0, 210, 255, 0.4);
+}
+
+.card-icon svg {
+  color: white;
+}
+
+.card-content {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.card-content h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffd700;
+  margin: 0 0 0.25rem;
+}
+
+.card-content p {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* 底部符文装饰 */
+.rune-decoration {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 2rem;
+}
+
+.rune {
+  font-size: 1.2rem;
+  color: rgba(255, 215, 0, 0.4);
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+  font-family: 'STKaiti', 'KaiTi', serif;
+  animation: runeGlow 3s ease-in-out infinite;
+}
+
+.rune:nth-child(1) { animation-delay: 0s; }
+.rune:nth-child(2) { animation-delay: 0.3s; }
+.rune:nth-child(3) { animation-delay: 0.6s; }
+.rune:nth-child(4) { animation-delay: 0.9s; }
+.rune:nth-child(5) { animation-delay: 1.2s; }
+
+@keyframes runeGlow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateY(-5px);
+  }
+}
+
+/* 响应式调整 */
+@media (max-width: 1200px) {
+  .hero-title {
+    font-size: 3rem;
+  }
+  
+  .feature-cards {
+    gap: 0.75rem;
+  }
+  
+  .feature-card.immortal {
+    min-width: 120px;
+    padding: 1.25rem 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 1.5rem;
+  }
+  
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .realm-track {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  
+  .track-line {
+    display: none;
+  }
+  
+  .feature-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .feature-card.immortal {
+    width: 100%;
+    max-width: 280px;
+    flex-direction: row;
+    text-align: left;
+  }
+  
+  .card-content {
+    text-align: left;
+  }
+  
+  .rune-decoration {
+    gap: 1rem;
+  }
+  
+  .rune {
+    font-size: 1rem;
+  }
+}
+
+/* 右侧认证区域 */
+.auth-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  position: relative;
+  z-index: 1;
+}
+
+.auth-container {
+  width: 100%;
+  max-width: 420px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 24px;
+  padding: 2.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+}
+
+/* 标签切换 */
+.auth-tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.tab {
+  flex: 1;
+  padding: 1rem;
+  background: transparent;
+  border: none;
+  color: #8892b0;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.tab:hover {
+  color: #ccd6f6;
+}
+
+.tab.active {
+  color: #fff;
+}
+
+.tab-indicator {
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  border-radius: 3px;
+}
+
+/* 表单区域 */
+.form-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-form {
+  width: 100%;
+}
+
+.form-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* 输入框组 */
+.input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-group .sd-input {
+  width: 100%;
+}
+
+.input-group .sd-input input {
+  background: #fff !important;
+  border: 2px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
+  color: #333 !important;
+  font-size: 1rem !important;
+  height: 56px !important;
+  padding: 0 16px !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.input-group .sd-input input::placeholder {
+  color: #8892b0 !important;
+}
+
+.input-group .sd-input input:focus {
+  background: #fff !important;
+  border-color: #667eea !important;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15), 0 0 20px rgba(102, 126, 234, 0.2) !important;
+  outline: none !important;
+}
+
+/* 前缀图标容器 */
+.input-group .sd-input .sd-input-prefix {
+  color: #667eea !important;
+  margin-right: 4px;
+  display: flex;
+  align-items: center;
+}
+
+/* 后缀图标容器 */
+.input-group .sd-input .sd-input-suffix {
+  margin-left: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  color: #667eea;
+  width: 22px;
+  height: 22px;
+}
+
+.toggle-password {
+  background: none;
+  border: none;
+  color: #8892b0;
+  cursor: pointer;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.toggle-password:hover {
+  color: #ccd6f6;
+}
+
+/* 修复聚焦时的闪动问题 */
+.input-group .sd-input {
+  transition: none !important;
+}
+
+.input-group .sd-input > div {
+  transition: none !important;
+}
+
+/* 表单选项 */
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #8892b0;
+  cursor: pointer;
+}
+
+.remember-me input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #667eea;
+  cursor: pointer;
+}
+
+.forgot-password {
+  color: #667eea;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.forgot-password:hover {
+  color: #764ba2;
+  text-decoration: underline;
+}
+
+/* 提交按钮 */
+.submit-btn {
+  width: 100%;
+  margin-top: 1rem;
+  height: 48px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  border: none !important;
+  border-radius: 12px !important;
+  color: white !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+  pointer-events: none;
+}
+
+.submit-btn:hover::before {
+  left: 100%;
+}
+
+.submit-btn:hover {
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4) !important;
+  transform: translateY(-2px);
+}
+
+.submit-btn:disabled,
+.submit-btn.sd-btn-loading {
+  opacity: 0.7 !important;
+  cursor: not-allowed;
+}
+
+/* 第三方登录 */
+.social-login {
+  margin-top: 2rem;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  color: #8892b0;
+  font-size: 0.85rem;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.social-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: #8892b0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.social-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(102, 126, 234, 0.5);
+  color: #fff;
+}
+
+/* 响应式设计 */
+@media (max-width: 992px) {
+  .home-page {
+    flex-direction: column;
+    min-height: 100vh;
+    height: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  
+  .hero-section {
+    padding: 2rem 1rem;
+    min-height: auto;
+    width: 100%;
+  }
+  
+  .hero-content {
+    max-width: 100%;
+    padding: 0 0.5rem;
+  }
+  
+  .hero-content h1 {
+    font-size: 2.5rem;
+  }
+  
+  .features {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  
+  .feature-item {
+    padding: 0.75rem 1rem;
+  }
+  
+  .auth-section {
+    padding: 2rem 1rem;
+    width: 100%;
+  }
+  
+  .auth-container {
+    padding: 2rem;
+    max-width: 100%;
+  }
+  
+  /* 小屏时禁用横向动画 */
+  .crane,
+  .meteor {
+    display: none;
+  }
+  
+  /* 云朵动画限制在容器内 */
+  .cloud {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .home-page {
+    padding: 0;
+  }
+  
+  .hero-section {
+    padding: 1.5rem 1rem;
+  }
+  
+  .hero-content h1 {
+    font-size: 1.75rem;
+  }
+  
+  .tagline {
+    font-size: 0.9rem;
+    padding: 0 0.5rem;
+  }
+  
+  .logo {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .logo svg {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .feature-item {
+    font-size: 0.8rem;
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .auth-section {
+    padding: 1.5rem 1rem;
+  }
+  
+  .auth-container {
+    padding: 1.25rem;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .tab {
+    padding: 0.625rem;
+    font-size: 0.875rem;
+  }
+  
+  .input-group input {
+    padding: 0.75rem 0.75rem 0.75rem 2.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .input-group svg {
+    width: 18px;
+    height: 18px;
+    left: 0.75rem;
+  }
+  
+  .toggle-password {
+    right: 0.75rem;
+  }
+}
